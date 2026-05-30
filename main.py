@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.types import ChatMemberUpdated
 from aiogram.enums import ChatMemberStatus
+import os
 
 TOKEN = os.getenv("BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")

@@ -1,2 +1,2 @@
 # telegram-bot-webhook
-for manager bot in telegram
+for manage bot in telegram

@@ -6,8 +6,8 @@ from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.types import ChatMemberUpdated
 from aiogram.enums import ChatMemberStatus
 
-TOKEN = "YOUR_BOT_TOKEN"
-WEBHOOK_URL = "https://your-app.onrender.com/webhook"
+TOKEN = os.getenv("BOT_TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()

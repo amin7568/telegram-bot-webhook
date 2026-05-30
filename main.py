@@ -44,6 +44,7 @@ async def delete_links(message: types.Message):
 # ---------------------------
 
 @app.get("/")
+@app.head("/")
 async def root():
     return {"status": "ok"}
 

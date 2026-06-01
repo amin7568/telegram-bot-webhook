@@ -2,6 +2,8 @@ import re
 import asyncio
 from fastapi import FastAPI, Request
 from aiogram import Bot, Dispatcher, types
+from aiogram.filters import ChatMemberUpdatedFilter
+from aiogram.types import ChatMemberUpdated
 from aiogram.enums import ChatMemberStatus
 import os
 
@@ -25,6 +27,7 @@ async def welcome(message: types.Message):
 # حذف پیام‌های دارای لینک
 # ---------------------------
 LINK_REGEX = r"(https?://|t\.me/|telegram\.me/|www\.)"
+
 @dp.message()
 async def delete_links(message: types.Message):
     if message.text and re.search(LINK_REGEX, message.text):

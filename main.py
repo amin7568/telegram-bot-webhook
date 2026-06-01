@@ -1,4 +1,3 @@
-#AmirPouya
 import re
 import asyncio
 from fastapi import FastAPI, Request
@@ -10,6 +9,7 @@ import os
 
 TOKEN = os.getenv("BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 app = FastAPI()
@@ -17,10 +17,12 @@ app = FastAPI()
 # ---------------------------
 # خوش‌آمدگویی به اعضای جدید
 # ---------------------------
-@dp.message(lambda message: message.new_chat_members is not None)
-async def welcome(message: types.Message):
-    for user in message.new_chat_members:
-        await message.reply(
+@dp.chat_member(ChatMemberUpdatedFilter(member_status_changed=True))
+async def welcome(event: ChatMemberUpdated):
+    if event.new_chat_member.status == ChatMemberStatus.MEMBER:
+        user = event.new_chat_member.user
+        await bot.send_message(
+            event.chat.id,
             f"سلام {user.full_name} 🌟\nخوش اومدی به گروه!"
         )
 
@@ -40,6 +42,7 @@ async def delete_links(message: types.Message):
 # ---------------------------
 # FastAPI Routes
 # ---------------------------
+
 @app.get("/")
 @app.head("/")
 async def root():

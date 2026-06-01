@@ -21,8 +21,18 @@ app = FastAPI()
 async def welcome(message: types.Message):
     for user in message.new_chat_members:
         await message.reply(
-            f"سلام {user.full_name} 🌟\nخوش اومدی به گروه!"
+            f"سلام @{user.username} 🌟\nخوش اومدی به گروه!"
         )
+
+# ---------------------------
+# خداحافظی به اعضای خارج‌شده
+# ---------------------------
+@dp.message(F.left_chat_member)
+async def goodbye(message: types.Message):
+    user = message.left_chat_member
+    await message.reply(
+        f"خداحافظ @{user.username} 👋\nموفق باشی!"
+    )
 # ---------------------------
 # حذف پیام‌های دارای لینک
 # ---------------------------

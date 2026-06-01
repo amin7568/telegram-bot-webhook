@@ -17,15 +17,12 @@ app = FastAPI()
 # ---------------------------
 # خوش‌آمدگویی به اعضای جدید
 # ---------------------------
-@dp.chat_member(ChatMemberUpdatedFilter(member_status_changed=True))
-async def welcome(event: ChatMemberUpdated):
-    if event.new_chat_member.status == ChatMemberStatus.MEMBER:
-        user = event.new_chat_member.user
-        await bot.send_message(
-            event.chat.id,
+@dp.message(lambda message: message.new_chat_members is not None)
+async def welcome(message: types.Message):
+    for user in message.new_chat_members:
+        await message.reply(
             f"سلام {user.full_name} 🌟\nخوش اومدی به گروه!"
         )
-
 # ---------------------------
 # حذف پیام‌های دارای لینک
 # ---------------------------
@@ -60,8 +57,8 @@ async def telegram_webhook(request: Request):
 # ---------------------------
 @app.on_event("startup")
 async def on_startup():
-    await bot.set_webhook(WEBHOOK_URL)
-
+    if WEBHOOK_URL:
+        await bot.set_webhook(WEBHOOK_URL)
 # ---------------------------
 # Shutdown Event → Delete Webhook
 # ---------------------------

@@ -1,7 +1,7 @@
 import re
 import asyncio
 from fastapi import FastAPI, Request
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.types import ChatMemberUpdated
 from aiogram.enums import ChatMemberStatus

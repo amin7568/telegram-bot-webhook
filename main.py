@@ -6,14 +6,14 @@ from aiogram.filters import ChatMemberUpdatedFilter
 from aiogram.types import ChatMemberUpdated
 from aiogram.enums import ChatMemberStatus
 import os
-
+import random
+#----------------------------------------------------
 TOKEN = os.getenv("BOT_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 app = FastAPI()
-
+#----------------------------------------------------
 # ---------------------------
 # خوش‌آمدگویی به اعضای جدید
 # ---------------------------
@@ -23,7 +23,6 @@ async def welcome(message: types.Message):
         await message.reply(
             f"سلام @{user.username} 🌟\nخوش اومدی به گروه!"
         )
-
 # ---------------------------
 # خداحافظی به اعضای خارج‌شده
 # ---------------------------
@@ -33,11 +32,31 @@ async def goodbye(message: types.Message):
     await message.reply(
         f"خداحافظ @{user.username} 👋\nموفق باشی!"
     )
+#---------------------------------------------------
+# واکنش به کلمه سلام
+#---------------------------------------------------
+@dp.message(F.text.lower().contains("سلام"))
+async def reply_salam(message: types.Message):
+    responses = [
+        "علیک سلام گل گلاب 🌹",
+        "سلام سلام 👋",
+        "درود بر شما 🌟",
+        "هی، سلام! 😊",
+    ]
+    await message.reply(random.choice(responses))
+#---------------------------------------------------
+# واکنش به کلمه حسام
+#---------------------------------------------------
+@dp.message(F.text.lower().contains("حسام"))
+async def reply_salam(message: types.Message):
+    responses = [
+        "حسام ویس بده"
+    ]
+    await message.reply(random.choice(responses))
 # ---------------------------
 # حذف پیام‌های دارای لینک
 # ---------------------------
 LINK_REGEX = r"(https?://|t\.me/|telegram\.me/|www\.)"
-
 @dp.message()
 async def delete_links(message: types.Message):
     if message.text and re.search(LINK_REGEX, message.text):
@@ -45,11 +64,9 @@ async def delete_links(message: types.Message):
             await message.delete()
         except:
             pass
-
 # ---------------------------
 # FastAPI Routes
 # ---------------------------
-
 @app.get("/")
 @app.head("/")
 async def root():
